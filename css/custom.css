@@ -1,0 +1,57 @@
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    width: 30em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#LinkType {
+    padding-top: 1em;
+}
+
+div.outputs {
+    width: 20em;
+    border: 1px solid black;
+    padding: 1em;
+}
+
+div.outputs div {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.2em;
+}
+
+div.outputs div label {
+    margin-right: 1em;
+}
+
+div.outputs div input {
+    margin-right: 2em;
+}
+
+div.inputs {
+    width: 20em;
+    border: 1px solid black;
+    padding: 1em;
+}
+
+div.inputs div {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.2em;
+}
+
+div.inputs div label {
+    margin-right: 1em;
+}
+
+div.inputs div input {
+    margin-right: 2em;
+}
+
+input {
+    width: 6em;
+    text-align: right;
+    margin-right: 1em;
+}

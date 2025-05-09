@@ -1,0 +1,247 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:hx-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Audio Video Bridging Calculator +</title>
+    <link rel="stylesheet" href="css/jquery-ui.theme.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <meta name="description" content="">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:image:alt" content="">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <script type="text/javascript" charset="utf-8" src="js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="avbcalc.js"></script>
+    <script type="text/javascript" charset="utf-8" src="middle.js"></script>
+
+    <meta name="theme-color" content="#fafafa">
+    <style>
+    </style>
+</head>
+<body>
+<div data-role="header">
+    <h1>ABCPlus - AVB Calculator+</h1>
+</div>
+<div data-role="ui-content" id="full-page">
+    <div id="outputArea">
+        <div id="output" class="outputs">
+            <div id="bwArea">
+                <label for="bwUsage">Bandwidth usage:</label>
+                <input id="bwUsage" value="0" readonly/>
+            </div>
+            <div id="streamsArea">
+                <label for="totalStreams">Total streams:</label>
+                <input id="totalStreams" value="0" readonly/>
+            </div>
+            <div id="channelsArea">
+                <label for="totalChannels">Total channels:</label>
+                <input id="totalChannels" value="0" readonly/>
+            </div>
+        </div>
+    </div>
+    <div id="inputs">
+        <div id="LinkType">
+            <label for="input_network_speed_in_bps">Select network link speed</label>
+            <select id="input_network_speed_in_bps" onchange="recalculate()">
+                <option value="10e6">10 Mbps</option>
+                <option value="100e6">100 Mbps</option>
+                <option value="1e9" selected="">1 Gbps</option>
+                <option value="2.5e9">2.5 Gbps</option>
+                <option value="5.0e9">5 Gbps</option>
+                <option value="10e9">10 Gbps</option>
+                <option value="25e9">25 Gbps</option>
+                <option value="40e9">40 Gbps</option>
+                <option value="100e9">100 Gbps</option>
+            </select>
+        </div>
+        <div id="availableStreams">
+            <label for="CRF">CRF streams:</label>
+            <div id="CRF" class="inputs">
+                <div>
+                    <label for="CRF_48k">48k CRF Stream Count:</label>
+                    <input id="CRF_48k" data-channels="0" data-sr="48000" data-format="CRFMilan" type="number"
+                           name="CRF_48k" value="0" min="0" max="4" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="CRF_96k">96k CRF Stream Count:</label>
+                    <input id="CRF_96k" data-channels="0" data-sr="96000" data-format="CRFMilan" type="number"
+                           name="CRF_96k" value="0" min="0" max="4" onchange="recalculate()"/>
+                </div>
+            </div>
+            <label for="AM824">AM824 audio streams:</label>
+            <div id="AM824" class="inputs">
+                <div>
+                    <label for="AM824_48k_1ch">1ch 48kHz</label>
+                    <input id="AM824_48k_1ch" data-channels="1" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_1ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_48k_2ch">2ch 48kHz</label>
+                    <input id="AM824_48k_2ch" data-channels="2" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_2ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_48k_4ch">4ch 48kHz</label>
+                    <input id="AM824_48k_4ch" data-channels="4" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_4ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_48k_8ch">8ch 48kHz</label>
+                    <input id="AM824_48k_8ch" data-channels="8" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_8ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_48k_12ch">12ch 48kHz</label>
+                    <input id="AM824_48k_12ch" data-channels="12" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_12ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_48k_16ch">16ch 48kHz</label>
+                    <input id="AM824_48k_16ch" data-channels="16" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_16ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_48k_24ch">24ch 48kHz</label>
+                    <input id="AM824_48k_24ch" data-channels="24" data-sr="48000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_48k_24ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_1ch">1ch 96kHz</label>
+                    <input id="AM824_96k_1ch" data-channels="1" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_1ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_2ch">2ch 96kHz</label>
+                    <input id="AM824_96k_2ch" data-channels="2" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_2ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_4ch">4ch 96kHz</label>
+                    <input id="AM824_96k_4ch" data-channels="4" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_4ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_8ch">8ch 96kHz</label>
+                    <input id="AM824_96k_8ch" data-channels="8" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_8ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_12ch">12ch 96kHz</label>
+                    <input id="AM824_96k_12ch" data-channels="12" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_12ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_16ch">16ch 96kHz</label>
+                    <input id="AM824_96k_16ch" data-channels="16" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_16ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AM824_96k_24ch">24ch 96kHz</label>
+                    <input id="AM824_96k_24ch" data-channels="24" data-sr="96000" data-format="AM824nb-async"
+                           type="number"
+                           name="AM824_96k_24ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+            </div>
+            <label for="AAF">AAF audio streams:</label>
+            <div id="AAF" class="inputs">
+                <div>
+                    <label for="AAF_48k_1ch">1ch 48kHz</label>
+                    <input id="AAF_48k_1ch" data-channels="1" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_1ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_48k_2ch">2ch 48kHz</label>
+                    <input id="AAF_48k_2ch" data-channels="2" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_2ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_48k_4ch">4ch 48kHz</label>
+                    <input id="AAF_48k_4ch" data-channels="4" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_4ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_48k_8ch">8ch 48kHz</label>
+                    <input id="AAF_48k_8ch" data-channels="8" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_8ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_48k_12ch">12ch 48kHz</label>
+                    <input id="AAF_48k_12ch" data-channels="12" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_12ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_48k_16ch">16ch 48kHz</label>
+                    <input id="AAF_48k_16ch" data-channels="16" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_16ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_48k_24ch">24ch 48kHz</label>
+                    <input id="AAF_48k_24ch" data-channels="24" data-sr="48000" data-format="AAF" type="number"
+                           name="AAF_48k_24ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_1ch">1ch 96kHz</label>
+                    <input id="AAF_96k_1ch" data-channels="1" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_1ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_2ch">2ch 96kHz</label>
+                    <input id="AAF_96k_2ch" data-channels="2" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_2ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_4ch">4ch 96kHz</label>
+                    <input id="AAF_96k_4ch" data-channels="4" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_4ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_8ch">8ch 96kHz</label>
+                    <input id="AAF_96k_8ch" data-channels="8" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_8ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_12ch">12ch 96kHz</label>
+                    <input id="AAF_96k_12ch" data-channels="12" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_12ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_16ch">16ch 96kHz</label>
+                    <input id="AAF_96k_16ch" data-channels="16" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_16ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+                <div>
+                    <label for="AAF_96k_24ch">24ch 96kHz</label>
+                    <input id="AAF_96k_24ch" data-channels="24" data-sr="96000" data-format="AAF" type="number"
+                           name="AAF_96k_24ch" value="0" min="0" max="100" onchange="recalculate()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="footer">
+        Version 2025-05-11, See <a href="http://avb.statusbar.com/">avb.statusbar.com</a>
+    </div>
+</div>
+</body>
+
+</html>
