@@ -66,7 +66,7 @@ function recalculate() {
             totalChannels = (streamCount * channelCount) + totalChannels;
             totalBw += streamCount * result.nominal_bw_per_stream_in_bps;
             console.log(result);
-            totalStreams = totalStreams + 1;
+            totalStreams = totalStreams + streamCount;
         }
     })
     document.getElementById("totalChannels").value = String(totalChannels);
